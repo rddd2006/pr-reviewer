@@ -1,0 +1,34 @@
+# Python bytecode and cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment and Dependencies
+.venv/
+env/
+venv/
+bin/
+lib/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.installed.cfg
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# AI/ML Specific (Large files and data)
+*.h5
+*.pth
+*.pt
+*.pkl
+*.onnx
+data/
+models/
+!models/.gitkeep
+
