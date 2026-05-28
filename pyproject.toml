@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "diff-reviewer"
+version = "0.1.0"
+description = "LLM-assisted pull request diff reviewer with benchmarking support"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "openai>=1.30.0",
+  "pydantic>=2.7.0",
+  "python-dotenv>=1.0.1",
+  "pytest>=8.2.0",
+  "requests>=2.31.0",
+  "tiktoken>=0.7.0",
+]
+
+[project.scripts]
+diff-reviewer = "src.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["src*"]

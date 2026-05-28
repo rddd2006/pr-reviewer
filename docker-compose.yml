@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    container_name: diff-reviewer-api
+    ports:
+      - "8000:8000"
+    environment:
+      - LLM_PROVIDER=${LLM_PROVIDER:-openai}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_MODEL=${OPENAI_MODEL:-gpt-4}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - GEMINI_MODEL=${GEMINI_MODEL:-gemini-pro}
+      - MAX_TOKENS=${MAX_TOKENS:-2000}
+      - LLM_TIMEOUT_SECONDS=${LLM_TIMEOUT_SECONDS:-120}
+      - ENABLE_COMPRESSION=${ENABLE_COMPRESSION:-true}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      - GITHUB_WEBHOOK_SECRET=${GITHUB_WEBHOOK_SECRET}
+      - GITHUB_APP_ID=${GITHUB_APP_ID}
+      - GITHUB_PRIVATE_KEY=${GITHUB_PRIVATE_KEY}
+    volumes:
+      - .:/app
+    restart: unless-stopped
+
+  # Optional: PostgreSQL for caching results
+  postgres:
+    image: postgres:15-alpine
+    container_name: diff-reviewer-db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=diff_reviewer
+      - POSTGRES_PASSWORD=change_me
+      - POSTGRES_DB=diff_reviewer
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

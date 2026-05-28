@@ -6,13 +6,13 @@ from src.core.logger import get_logger
 
 class DiffChunker:
 
-    def __init__(self):
+    def __init__(self, settings=None):
         self.logger = get_logger("DiffChunker")
-        self.settings = Settings()
+        self.settings = settings or Settings.from_env()
 
-        self.compression = CompressionStrategy()
+        self.compression = CompressionStrategy() if self.settings.enable_compression else None
         self.packer = FilePacker(
-            max_tokens=self.settings.MAX_TOKENS,
+            max_tokens=self.settings.max_tokens,
             compression=self.compression
         )
 

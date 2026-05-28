@@ -1,6 +1,6 @@
 from src.core.tokenizer import count_tokens
 from src.models.chunk_models import Chunk
-from src.chunking.strategies.byte_splitter import split_long_line
+from src.chunking.strategies.byte_splitter import split_line_into_segments
 
 
 def score_line(line):
@@ -21,23 +21,24 @@ def split_hunk_lines(hunk, file_path, max_tokens):
     current_tokens = count_tokens(current)
 
     for line in lines:
-        tokens = count_tokens(line)
+        segments = [line]
+        if count_tokens(line) > max_tokens:
+            segments = split_line_into_segments(line, max_tokens - count_tokens(header))
 
-        # ✅ CASE 1: fits
-        if current_tokens + tokens <= max_tokens:
-            current += line + "\n"
-            current_tokens += tokens
+        for segment in segments:
+            segment_tokens = count_tokens(segment)
+            if current_tokens + segment_tokens > max_tokens and current_tokens > count_tokens(header):
+                chunks.append(Chunk(
+                    content=current,
+                    tokens=current_tokens,
+                    files=[file_path]
+                ))
+                current = header
+                current_tokens = count_tokens(current)
 
-        # 🔥 CASE 2: fallback to byte split
-        else:
-            if tokens > max_tokens:
-                line = split_long_line(line, max_tokens)
+            current += segment + "\n"
+            current_tokens += segment_tokens
 
-                if current_tokens + count_tokens(line) <= max_tokens:
-                    current += line + "\n"
-                    current_tokens += count_tokens(line)
-
-        # flush chunk
         if current_tokens >= max_tokens:
             chunks.append(Chunk(
                 content=current,

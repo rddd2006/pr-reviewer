@@ -1,10 +1,13 @@
-from pydantic import BaseModel
-from typing import List
+from dataclasses import dataclass, field
 
-class Hunk(BaseModel):
+
+@dataclass(slots=True)
+class Hunk:
     header: str
-    lines: List[str]
+    lines: list[str] = field(default_factory=list)
 
-class DiffFile(BaseModel):
+
+@dataclass(slots=True)
+class DiffFile:
     path: str
-    hunks: List[Hunk]
+    hunks: list[Hunk] = field(default_factory=list)

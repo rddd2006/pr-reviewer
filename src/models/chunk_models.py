@@ -1,7 +1,8 @@
-from pydantic import BaseModel
-from typing import List
+from dataclasses import dataclass, field
 
-class Chunk(BaseModel):
+
+@dataclass(slots=True)
+class Chunk:
     content: str
     tokens: int
-    files: List[str]
+    files: list[str] = field(default_factory=list)

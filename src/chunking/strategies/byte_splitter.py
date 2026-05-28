@@ -18,3 +18,20 @@ def split_long_line(line, max_tokens):
             right = mid - 1
 
     return line[:best]
+
+
+def split_line_into_segments(line, max_tokens):
+    segments = []
+    remaining = line
+
+    while remaining:
+        segment = split_long_line(remaining, max_tokens)
+        if not segment:
+            break
+        segments.append(segment)
+        remaining = remaining[len(segment):]
+
+    if not segments:
+        segments.append(line[:max(1, min(len(line), max_tokens))])
+
+    return segments

@@ -6,15 +6,17 @@ def parse_diff(diff_text: str):
     current_hunk = None
 
     for line in diff_text.split("\n"):
-
         if line.startswith("diff --git"):
             if current_file:
                 files.append(current_file)
-
-            path = line.split(" ")[-1]
-            current_file = DiffFile(path=path, hunks=[])
+            parts = line.split()
+            path = parts[3] if len(parts) >= 4 else parts[-1]
+            current_file = DiffFile(path=path.removeprefix("b/"))
+            current_hunk = None
 
         elif line.startswith("@@"):
+            if current_file is None:
+                continue
             current_hunk = Hunk(header=line, lines=[])
             current_file.hunks.append(current_hunk)
 

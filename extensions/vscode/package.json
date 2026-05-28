@@ -1,0 +1,105 @@
+{
+  "name": "diff-reviewer",
+  "displayName": "Diff Reviewer",
+  "description": "AI-powered code review for pull requests and diffs",
+  "version": "0.1.0",
+  "publisher": "yourusername",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/diff-reviewer"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "code-review",
+    "ai",
+    "diff",
+    "pr",
+    "github"
+  ],
+  "icon": "media/icon.png",
+  "activationEvents": [
+    "onView:diffReviewerExplorer",
+    "onCommand:diffReviewer.reviewDiff",
+    "onCommand:diffReviewer.reviewCurrentFile"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "diffReviewer.reviewDiff",
+        "title": "Review Diff",
+        "category": "Diff Reviewer"
+      },
+      {
+        "command": "diffReviewer.reviewCurrentFile",
+        "title": "Review Current File",
+        "category": "Diff Reviewer"
+      },
+      {
+        "command": "diffReviewer.openSettings",
+        "title": "Open Settings",
+        "category": "Diff Reviewer"
+      }
+    ],
+    "views": {
+      "explorer": [
+        {
+          "id": "diffReviewerExplorer",
+          "name": "Diff Reviewer"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Diff Reviewer",
+      "properties": {
+        "diffReviewer.apiUrl": {
+          "type": "string",
+          "default": "http://localhost:8000",
+          "description": "API server URL"
+        },
+        "diffReviewer.apiKey": {
+          "type": "string",
+          "default": "",
+          "description": "API key (if required)"
+        },
+        "diffReviewer.defaultCommand": {
+          "type": "string",
+          "default": "review",
+          "enum": ["review", "describe", "ask", "generate_labels"],
+          "description": "Default review command"
+        },
+        "diffReviewer.autoReview": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically review on save"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.0.0",
+    "@vscode/test-electron": "^2.3.0"
+  },
+  "dependencies": {
+    "axios": "^1.6.0"
+  }
+}

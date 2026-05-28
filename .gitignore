@@ -21,6 +21,9 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+.env
+.pytest_cache/
+benchmark_results.json
 
 # AI/ML Specific (Large files and data)
 *.h5
@@ -31,4 +34,3 @@ wheels/
 data/
 models/
 !models/.gitkeep
-

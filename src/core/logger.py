@@ -1,8 +1,13 @@
 import logging
 
+from src.core.config import Settings
+
+
 def get_logger(name):
+    settings = Settings.from_env()
     logger = logging.getLogger(name)
-    logger.setLevel(logging.INFO)
+    logger.setLevel(getattr(logging, settings.log_level, logging.INFO))
+    logger.propagate = False
 
     if not logger.handlers:
         handler = logging.StreamHandler()

@@ -5,66 +5,30 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from src.pipeline.diff_pipeline import DiffPipeline
 from src.core.config import Settings
 
-diff = open("test.diff").read()
+with open("test.diff", encoding="utf-8") as handle:
+    diff = handle.read()
 
 pipeline = DiffPipeline()
 chunks = pipeline.run(diff)
 
-MAX = Settings.MAX_TOKENS
+max_tokens = Settings.from_env().max_tokens
 
 print("\n====== EVALUATION ======")
 
-# 1. token safety
-violations = [c.tokens for c in chunks if c.tokens > MAX]
+violations = [chunk.tokens for chunk in chunks if chunk.tokens > max_tokens]
 print("Token violations:", len(violations))
 
-# 2. efficiency
-avg_tokens = sum(c.tokens for c in chunks) / len(chunks)
+avg_tokens = sum(chunk.tokens for chunk in chunks) / len(chunks) if chunks else 0
 print("Avg tokens:", avg_tokens)
-print("Efficiency (%):", round((avg_tokens / MAX) * 100, 2))
+print("Efficiency (%):", round((avg_tokens / max_tokens) * 100, 2) if max_tokens else 0)
 
-# 3. chunk count
 print("Total chunks:", len(chunks))
 
-# 4. file distribution
 file_map = {}
-for c in chunks:
-    for f in c.files:
-        file_map[f] = file_map.get(f, 0) + 1
+for chunk in chunks:
+    for file_path in chunk.files:
+        file_map[file_path] = file_map.get(file_path, 0) + 1
 
 print("\nFile appearances:")
-for k, v in file_map.items():
-    print(k, "→", v)
-from src.pipeline.diff_pipeline import DiffPipeline
-from src.core.config import Settings
-
-diff = open("test.diff").read()
-
-pipeline = DiffPipeline()
-chunks = pipeline.run(diff)
-
-MAX = Settings.MAX_TOKENS
-
-print("\n====== EVALUATION ======")
-
-# 1. token safety
-violations = [c.tokens for c in chunks if c.tokens > MAX]
-print("Token violations:", len(violations))
-
-# 2. efficiency
-avg_tokens = sum(c.tokens for c in chunks) / len(chunks)
-print("Avg tokens:", avg_tokens)
-print("Efficiency (%):", round((avg_tokens / MAX) * 100, 2))
-
-# 3. chunk count
-print("Total chunks:", len(chunks))
-
-# 4. file distribution
-file_map = {}
-for c in chunks:
-    for f in c.files:
-        file_map[f] = file_map.get(f, 0) + 1
-
-print("\nFile appearances:")
-for k, v in file_map.items():
-    print(k, "→", v)
+for file_path, count in sorted(file_map.items()):
+    print(file_path, "->", count)

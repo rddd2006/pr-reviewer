@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Diff Reviewer</h1>
+      <p class="subtitle">AI-powered code review</p>
+    </div>
+
+    <div id="status" class="status hidden"></div>
+
+    <div class="form-section">
+      <div class="form-group">
+        <label for="command">Review Command:</label>
+        <select id="command">
+          <option value="review">Review (Full Analysis)</option>
+          <option value="describe">Describe Changes</option>
+          <option value="ask">Ask Question</option>
+          <option value="generate_labels">Generate Labels</option>
+          <option value="improve">Code Improvement</option>
+          <option value="update_changelog">Update Changelog</option>
+        </select>
+      </div>
+
+      <div class="form-group" id="requestGroup" style="display: none;">
+        <label for="userRequest">Your Question/Request:</label>
+        <textarea id="userRequest" placeholder="Ask about the code..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="apiUrl">API URL:</label>
+        <input type="text" id="apiUrl" placeholder="http://localhost:8000" value="">
+      </div>
+
+      <div class="form-group">
+        <label for="apiKey">API Key (optional):</label>
+        <input type="password" id="apiKey" placeholder="Leave empty if not needed">
+      </div>
+
+      <button id="reviewBtn" class="btn btn-primary">Review Current PR</button>
+      <button id="saveSettingsBtn" class="btn btn-secondary">Save Settings</button>
+    </div>
+
+    <div id="result" class="result hidden">
+      <div class="result-header">
+        <h2>Review Result</h2>
+        <button id="copyBtn" class="btn-small">Copy</button>
+        <button id="closeResultBtn" class="btn-small">Close</button>
+      </div>
+      <div id="resultContent" class="result-content"></div>
+    </div>
+
+    <div class="footer">
+      <p>
+        <a href="#" id="settingsLink">Settings</a> | 
+        <a href="#" id="docsLink">Documentation</a> |
+        <a href="#" id="githubLink">GitHub</a>
+      </p>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

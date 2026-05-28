@@ -1,0 +1,62 @@
+[
+  {
+    "name": "cpython-doc-warning",
+    "repo": "python/cpython",
+    "pr": 150556,
+    "kind": "docs"
+  },
+  {
+    "name": "django-release-note-links",
+    "repo": "django/django",
+    "pr": 21371,
+    "kind": "docs"
+  },
+  {
+    "name": "pydantic-link-migration",
+    "repo": "pydantic/pydantic",
+    "pr": 13229,
+    "kind": "code"
+  },
+  {
+    "name": "cpython-zipfile-filenames",
+    "repo": "python/cpython",
+    "pr": 150529,
+    "kind": "code"
+  },
+  {
+    "name": "django-release-script-tests",
+    "repo": "django/django",
+    "pr": 21363,
+    "kind": "code"
+  },
+  {
+    "name": "numpy-einsum-typing",
+    "repo": "numpy/numpy",
+    "pr": 31515,
+    "kind": "code"
+  },
+  {
+    "name": "starlette-httpx2-test-client",
+    "repo": "encode/starlette",
+    "pr": 3291,
+    "kind": "code"
+  },
+  {
+    "name": "sklearn-regression-test-isolation",
+    "repo": "scikit-learn/scikit-learn",
+    "pr": 34131,
+    "kind": "code"
+  },
+  {
+    "name": "uv-git-archive-deps",
+    "repo": "astral-sh/uv",
+    "pr": 19589,
+    "kind": "code"
+  },
+  {
+    "name": "uv-lfs-archive-validation",
+    "repo": "astral-sh/uv",
+    "pr": 19592,
+    "kind": "code"
+  }
+]

@@ -1,0 +1,18 @@
+{
+  "name": "diff-reviewer",
+  "url": "https://github.com/yourusername/diff-reviewer",
+  "hook_attributes": {
+    "url": "https://your-api-server.com/webhook"
+  },
+  "public": true,
+  "default_events": [
+    "pull_request",
+    "pull_request_review"
+  ],
+  "default_permissions": {
+    "pull_requests": "write",
+    "contents": "read",
+    "checks": "write"
+  },
+  "display_name": "Diff Reviewer"
+}
